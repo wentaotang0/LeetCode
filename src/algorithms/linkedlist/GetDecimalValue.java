@@ -53,7 +53,7 @@ public class GetDecimalValue {
      * @param head 链表头
      * @return
      */
-    public int getDecimalValue(ListNode head) {
+   /* public int getDecimalValue(ListNode head) {
 
         //数组保存链表结果
         int[] node = new int[30];
@@ -73,16 +73,59 @@ public class GetDecimalValue {
             offset++;
         }
         return result;
+    }*/
+
+    /**
+     * 如果一个十进制的数字，542要和1拼接，需要542*10+1=5421
+     * 如果一个二进制的数字，101要和1拼接，需要101*10+1=1011（注意按照二进制的方法计算）
+     * <p>
+     * 2进制表示101：（101）=（1*（10）+0）*（10）+1
+     * 把101转成十进制 即：（5）=（1*（2）+0）*2+1（2进制的10，10进制为2）
+     * 所以公式为：ans=ans*2+head.val
+     *
+     * @param head
+     * @return
+     */
+  /*  public int getDecimalValue(ListNode head) {
+
+        int ans = 0;
+        while (head != null) {
+            ans = ans * 2 + head.val;
+            head = head.next;
+        }
+        return ans;
+    }*/
+
+    /**
+     * 再次升级版本，使用<<和|运算符
+     *
+     * @param head
+     * @return
+     */
+    public int getDecimalValue(ListNode head) {
+
+        int ans = 0;
+        while (head != null) {
+            //代替ans = ans * 2 + head.val;左移1位即乘2，由于左移一位后，有一个位置空下来，所以可以|
+            ans = (ans << 1) | head.val;
+            head = head.next;
+        }
+        return ans;
     }
 
     public static void main(String[] args) {
-        ListNode n1 = new ListNode(1);
+      /*  ListNode n1 = new ListNode(1);
         ListNode n2 = new ListNode(0);
         ListNode n3 = new ListNode(1);
         ListNode head = new ListNode(9);
         head.next = n1;
         head.next.next = n2;
         head.next.next.next = n3;
-        System.out.println(new GetDecimalValue().getDecimalValue(head));
+        System.out.println(new GetDecimalValue().getDecimalValue(head));*/
+
+        int i = 10 | 8;
+        System.out.println(i);
+        System.out.println(10 + 8);
+        System.out.println(0 << 10);
     }
 }
