@@ -38,15 +38,17 @@ public class InsertionSortList {
 
     /**
      * 插入排序
+     *
      * @param head
      * @return
      */
-    public ListNode insertionSortList(ListNode head) {
+    /*public ListNode insertionSortList(ListNode head) {
         ListNode dummy = new ListNode(-1);
         ListNode pre = dummy;
         ListNode cur = head;
         while (cur != null) {
             ListNode next = cur.next;
+            //已排序区间从头开始比较
             while (pre.next != null && pre.next.val < cur.val) {
                 pre = pre.next;
             }
@@ -58,12 +60,39 @@ public class InsertionSortList {
             cur = next;
         }
         return dummy.next;
+    }*/
+    public ListNode insertionSortList(ListNode head) {
+        ListNode dummy = new ListNode(Integer.MIN_VALUE);
+        ListNode pre = dummy;
+        //指向已排序最大的元素
+        ListNode tail = dummy;
+        ListNode cur = head;
+        while (cur != null) {
+            if (cur.val > tail.val) {
+                tail.next = cur;
+                tail = cur;
+                cur = cur.next;
+            } else {
+                ListNode temp = cur.next;
+                //防止成环。因为当cur=pre.next时，pre.next=tail，tail.next=pre.next.next=cur。
+                tail.next = temp;
+                while (pre.next != null && pre.next.val < cur.val) {
+                    pre = pre.next;
+                }
+                cur.next = pre.next;
+                pre.next = cur;
+                pre = dummy;
+                cur = temp;
+            }
+        }
+        return dummy.next;
     }
 
+
     public static void main(String[] args) {
-        ListNode n1 = new ListNode(4);
+        ListNode n1 = new ListNode(1);
         ListNode n2 = new ListNode(2);
-        ListNode n3 = new ListNode(1);
+        ListNode n3 = new ListNode(4);
         ListNode n4 = new ListNode(3);
 
         n1.next = n2;
