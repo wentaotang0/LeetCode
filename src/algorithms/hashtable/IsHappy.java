@@ -1,7 +1,5 @@
 package algorithms.hashtable;
 
-import java.util.HashSet;
-
 /**
  * @author twt
  * @description 编写一个算法来判断一个数 n 是不是快乐数。
@@ -43,14 +41,14 @@ public class IsHappy {
      * @param n
      * @return
      */
-    public boolean isHappy(int n) {
+    /*public boolean isHappy(int n) {
         HashSet<Integer> seen = new HashSet<>();
         while (n != 1 && !seen.contains(n)) {
             seen.add(n);
             n = getNext(n);
         }
         return n == 1;
-    }
+    }*/
 
     int getNext(int n) {
         int ans = 0;
@@ -63,7 +61,28 @@ public class IsHappy {
     }
 
 
+    /**
+     * 双指针检测环的思想
+     * 1.如果 n 是一个快乐数，即没有循环，那么快跑者最终会比慢跑者先到达数字 1
+     * 2.如果 n 不是一个快乐的数字，那么最终快跑者和慢跑者将在同一个数字上相遇
+     *
+     * @param n
+     * @return
+     */
+    public boolean isHappy(int n) {
+
+        int fast = getNext(n);
+        int slow = n;
+        while ((fast != 1) && (fast != slow)) {
+            slow = getNext(slow);
+            fast = getNext(getNext(fast));
+        }
+
+        return fast == 1;
+    }
+
+
     public static void main(String[] args) {
-        new IsHappy();
+        System.out.println(new IsHappy().isHappy(19));
     }
 }
