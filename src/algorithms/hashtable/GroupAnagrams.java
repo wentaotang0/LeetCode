@@ -60,6 +60,59 @@ public class GroupAnagrams {
         }
         return new ArrayList(map.values());
     }
+	
+	  /**
+     * 1.将每个字符串排序
+     * 2.哈希表添加
+     *
+     * @param strs
+     * @return
+     */
+    /*public List<List<String>> groupAnagrams(String[] strs) {
+        HashMap<String, List<String>> map = new HashMap<>();
+        String[] clone = strs.clone();
+        int length = strs.length;
+        for (int i = 0; i < length; i++) {
+            char[] chars = strs[i].toCharArray();
+            Arrays.sort(chars);
+            strs[i] = String.valueOf(chars);
+        }
+
+        for (int i = 0; i < length; i++) {
+            List<String> list = map.get(strs[i]);
+            if (list == null) {
+                list = new ArrayList<>();
+            }
+            list.add(clone[i]);
+            map.put(strs[i], list);
+        }
+        ArrayList<List<String>> ans = new ArrayList<>();
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            ans.add(entry.getValue());
+        }
+        return ans;
+    }*/
+
+    /**
+     * 字符串排序优化
+     *
+     * @param strs
+     * @return
+     */
+    /*public List<List<String>> groupAnagrams(String[] strs) {
+
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (String str : strs) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String key = String.valueOf(chars);
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList());
+            }
+            map.get(key).add(str);
+        }
+        return new ArrayList(map.values());
+    }*/
 
     public static void main(String[] args) {
         StringBuilder sb = new StringBuilder("");
