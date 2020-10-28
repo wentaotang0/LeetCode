@@ -1,8 +1,6 @@
 package algorithms.hashtable;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Description 给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
@@ -28,32 +26,44 @@ import java.util.List;
 public class GroupAnagrams {
 
     /**
-     * 1.将每个字符串排序
-     * 2.哈希表添加
+     * 思想：字母异位词指字母相同，但排列不同的字符串。即每个字符出现的个数相等
      *
      * @param strs
      * @return
      */
     public List<List<String>> groupAnagrams(String[] strs) {
-        HashMap<String, List<String>> map = new HashMap<>();
-        String[] clone = strs.clone();
-        for (int i = 0; i < strs.length; i++) {
-            //strs[i]=
-        }
 
-        return null;
+        int[] count = new int[26];
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (int i = 0; i < strs.length; i++) {
+            String str = strs[i];
+            char[] chars = str.toCharArray();
+
+            //每次进来需要重置count
+            Arrays.fill(count, 0);
+            for (char c : chars) {
+                count[c - 'a'] += 1;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (int num : count) {
+                //添加“#”是因为存在num是10，1这种情况导致append后为101造成相同的key
+                sb.append("#");
+                sb.append(num);
+            }
+
+            String key = sb.toString();
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList());
+            }
+            map.get(key).add(str);
+        }
+        return new ArrayList(map.values());
     }
 
     public static void main(String[] args) {
-        String str = "cab";
-        char[] chars = str.toCharArray();
-        Arrays.sort(chars);
-        System.out.println(String.valueOf(chars));
-
-        String[] arr = {"qw", "ert"};
-        String[] clone = arr.clone();
-        arr[0] = "wq";
-        System.out.println(Arrays.toString(clone));
-        System.out.println(Arrays.toString(arr));
+        StringBuilder sb = new StringBuilder("");
+        sb.append("#").append(1);
+        System.out.println(sb.toString());
     }
 }
