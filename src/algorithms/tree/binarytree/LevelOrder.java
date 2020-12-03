@@ -44,7 +44,7 @@ public class LevelOrder {
      * @param root
      * @return
      */
-    public List<List<Integer>> levelOrder(TreeNode root) {
+    /*public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
         if (root == null) return ans;
         Queue<TreeNode> queue = new LinkedList<>();
@@ -75,6 +75,70 @@ public class LevelOrder {
         }
 
         return ans;
+    }*/
+
+
+    /**
+     * bfs代码优化
+     *
+     * @param root
+     * @return
+     */
+    /*public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null) return ans;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            ArrayList<Integer> level = new ArrayList<>();
+            //当前层节点个数
+            int levelNum = queue.size();
+            while (levelNum > 0) {
+                TreeNode node = queue.poll();
+                level.add(node.val);
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
+                levelNum--;
+            }
+            ans.add(level);
+        }
+        return ans;
+    }*/
+
+    private int depth;
+
+    List<List<Integer>> ans = new ArrayList<>();
+
+    /**
+     * dfs实现方式
+     *
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        dfs(root, 0);
+        return ans;
+
+    }
+
+    /**
+     * 后续遍历,需要在遍历节点之前创建每层的集合
+     *
+     * @param root     当前节点
+     * @param curDepth 当前深度
+     */
+    private void dfs(TreeNode root, int curDepth) {
+        if (root == null) return;
+        //优化：depth可以替换为结果集合当前个数
+        if (ans.size() == curDepth) {
+        //if (depth == curDepth) {
+            ArrayList<Integer> level = new ArrayList<>();
+            ans.add(level);
+            depth++;
+        }
+        ans.get(curDepth).add(root.val);
+        dfs(root.left, curDepth + 1);
+        dfs(root.right, curDepth + 1);
     }
 
     public static void main(String[] args) {
@@ -83,6 +147,10 @@ public class LevelOrder {
         root.right = new TreeNode(20);
         root.right.left = new TreeNode(15);
         root.right.right = new TreeNode(7);
-        System.out.println(new LevelOrder().levelOrder(root));
+        //System.out.println(new LevelOrder().levelOrder(root));
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(null);
+        queue.add(null);
+        System.out.println(queue.size());
     }
 }
