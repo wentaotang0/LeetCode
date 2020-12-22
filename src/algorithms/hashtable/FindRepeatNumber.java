@@ -60,6 +60,8 @@ public class FindRepeatNumber {
     }
 
     public static void main(String[] args) {
-        System.out.println(new FindRepeatNumber().findRepeatNumber(new int[]{2, 3, 1, 0, 2, 5, 3}));
+        //System.out.println(new FindRepeatNumber().findRepeatNumber(new int[]{2, 3, 1, 0, 2, 5, 3}));
+        String str = "test";
+        System.out.println(str.hashCode());
     }
 }

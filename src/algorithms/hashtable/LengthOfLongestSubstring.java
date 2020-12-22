@@ -38,7 +38,7 @@ public class LengthOfLongestSubstring {
      * @param s
      * @return
      */
-    public int lengthOfLongestSubstring(String s) {
+    /*public int lengthOfLongestSubstring(String s) {
 
         HashSet<Character> set = new HashSet<>();
         //表示一开始结束的位置在最左边
@@ -56,6 +56,28 @@ public class LengthOfLongestSubstring {
                 end++;
             }
             ans = Math.max(ans, end - i + 1);
+        }
+        return ans;
+    }*/
+
+    /**
+     * 双指针+哈希
+     * 子串一定是连续的，遇到重复的字符就不能再继续往下找了，此时滑动窗口的左边界可以指向重复子串的下一个字符。
+     * 当滑动窗口的有边界可以一直往下找直到最后一个字符，此时滑动窗口有最长的不重复字符。
+     *
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring(String s) {
+        int l = 0, r = 0, ans = 0;
+        HashSet<Character> set = new HashSet<>();
+        while (r < s.length()) {
+            char c = s.charAt(r++);
+            while (set.contains(c)) {
+                set.remove(s.charAt(l++));
+            }
+            set.add(c);
+            ans = Math.max(ans, r - l);
         }
         return ans;
     }
