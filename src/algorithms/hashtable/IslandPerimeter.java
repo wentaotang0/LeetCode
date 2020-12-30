@@ -40,7 +40,7 @@ public class IslandPerimeter {
      * @param grid
      * @return
      */
-    public int islandPerimeter(int[][] grid) {
+    /*public int islandPerimeter(int[][] grid) {
         int ans = 0;
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
@@ -59,7 +59,52 @@ public class IslandPerimeter {
             }
         }
         return ans;
+    }*/
+
+
+    //上下左右四个方向
+    int[] dx = {-1, 1, 0, 0};
+    int[] dy = {0, 0, -1, 1};
+
+
+    /**
+     * dfs思路
+     *
+     * @param grid
+     * @return
+     */
+    public int islandPerimeter(int[][] grid) {
+        int m = grid.length;//对应dx
+        int n = grid[0].length;//对应dy
+        int ans = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                //存在陆地和陆地不相连的情况，所以每次遇到陆地都需要dfs，不然可以一次dfs
+                if (grid[i][j] == 1) {
+                    ans += dfs(grid, i, j, m, n);
+                }
+            }
+        }
+        return ans;
     }
+
+    private int dfs(int[][] grid, int i, int j, int m, int n) {
+        //越界或者周边是水域
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 0) return 1;
+
+        //防止陷入死循环
+        if (grid[i][j] == 2) return 0;
+        grid[i][j] = 2;
+
+        int ans = 0;
+        for (int k = 0; k < 4; k++) {
+            int x = dx[k] + i;
+            int y = dy[k] + j;
+            ans += dfs(grid, x, y, m, n);
+        }
+        return ans;
+    }
+
 
     public static void main(String[] args) {
         int[][] arr = {{0, 1, 0, 0}, {1, 1, 1, 0}, {0, 1, 0, 0}, {1, 1, 0, 0}};
