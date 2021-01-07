@@ -55,4 +55,9 @@ public class FindWords {
         }
         return ok;
     }
+
+    public static void main(String[] args) {
+        System.out.println(181338494 / 62);
+        System.out.println(181338494 % 62);
+    }
 }
